@@ -1,37 +1,40 @@
-/* 
-    node
-    
-    node modules    
-        - core module
-            - fs
-            - path
-            - http
-            - http modules - to create APIs 
-        - local module
-        - third party module.
+const express = require('express')
+const app = express()    // return { get:()=>{} }
 
-*/
+app.get('/api/orders', function (req, res) {
 
-// const signIn = require("./auth")
-// signIn()
-// const signup = require("./auth")
-// const signup = () =>{}
-// signup()
-
-const auth = require("./auth")
-// console.log(auth);
-auth.signIn()
-auth.signup("ram","12345678")
+    let loggedIn = true;
+    let hasAccess = false
 
 
+    if (!loggedIn) {
+        res.status(401).send("authenticated")
+    } else {
 
+        if (hasAccess) {
+            res.send('list of orders')
+        }
+        else {
+            res.status(403).send("Forbidden. No caccess")
+        }
 
+    }
 
+})
 
-// const fs = require("fs")
+app.get('/', function (req, res) {
+    res.send('Hello World - again')
+})
 
-// fs.writeFileSync("log.txt","logged in at 3:00")
+app.get("/api/products", (req, res) => {
 
-// const http = require("http")
+    let products = getDatabaseProduct();
+    res.send({
+        data: ["apple", "orange", "kiwi", "papaya"],
+        metada: { total: 3 }
+    })
+})
 
-// http.createServer
+app.listen(8000, () => {
+    console.log("server started...")
+})
