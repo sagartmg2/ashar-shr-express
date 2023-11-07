@@ -8,6 +8,11 @@ mongoose.connect('mongodb://127.0.0.1:27017/todos')
 const app = express()
 const todos = require("./todos");
 
+// const products = require("./products")  //{crateProdut:() =>{} , fetchP : () =>}
+const { createProduct, updateProduct, deleteProduct, fetchProducts } = require("./products")
+/* object destructuring.. */
+
+
 async function getTodos(req, res) {
     let todos = await Todo.find()
     res.send(todos)
@@ -20,8 +25,11 @@ async function getTodos(req, res) {
 }
 
 app.get("/api/todos", getTodos)
-
 app.post("/api/todos", todos.createTodos)
+app.get("/api/products", fetchProducts)
+app.post("/api/products", createProduct)
+app.put("/api/products", updateProduct)
+app.delete("/api/products", deleteProduct)
 
 
 
