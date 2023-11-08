@@ -2,9 +2,9 @@
 //     console.log(i)
 // }
 
-setTimeout(() => {
-    makeApiCall()
-}, 2000)
+// setTimeout(() => {
+//     makeApiCall()
+// }, 2000)
 
 console.log(1)
 console.log(2)
@@ -14,9 +14,7 @@ function doSomethimg() {
     console.log("do something")
 }
 
-function makeApiCall() {
-    console.log("api response recived..")
-}
+
 
 
 /*  Promise 
@@ -26,11 +24,32 @@ function makeApiCall() {
 */
 
 let promise1 = new Promise((resolve, reject) => {
-    // resolve("[1,2,3,4]")
-    reject("[1,2,3,4]")
+    setTimeout(() => {
+        resolve("[1,2,3,4]")
+        // reject("server error")
+    }, 2000)
 })
 
 console.log(promise1)
+
+
+
+function makeApiCall() {
+
+    promise1
+        .then((res) => {
+            console.log({ res })
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+
+
+    console.log("we have the response...as ..");
+}
+
+
+makeApiCall()
 
 
 

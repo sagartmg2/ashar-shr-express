@@ -8,16 +8,29 @@ const ProductSchema = new Schema({
 
 const ProductModal = mongoose.model("Product", ProductSchema)
 
-const fetchProducts = async (req, res) => {
-    let products = await ProductModal.find()
-    res.send(products)
+const fetchProducts = async (req, res, next) => {
+    try {
+        let products = await ProductModa.find()
+        // console.log(products)
+        res.send(products)
+
+    } catch (err) {
+        next(err)
+        // res.status(500).send("server error")
+    }
 }
-const createProduct = (req, res) => {
-    ProductModal.create({
-        title: "mobile",
-        price:100
-    })
-    res.send("created")
+const createProduct = async (req, res,next) => {
+    console.log(req.body)
+    try {
+        let product = await ProductModal.create({
+            title: req.body.title,
+            price: 100
+        })
+        res.send(product)
+    } catch (err) {
+        next(err)
+        // res.status(500).send("server error")
+    }
 }
 
 module.exports = {

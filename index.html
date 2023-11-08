@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <form onsubmit="addTodo(event)">
+        <input type="text" placeholder="title">
+        <input type="submit">
+    </form>
+
+    <script>
+        function addTodo(e){
+            e.preventDefault()
+
+            console.log("make api call")
+
+            fetch("http://localhost:8000/api/products",{
+                method:"post"
+            })
+
+        }
+    </script>
+    
+</body>
+</html>

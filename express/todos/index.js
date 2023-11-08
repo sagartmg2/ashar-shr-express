@@ -24,14 +24,30 @@ async function getTodos(req, res) {
     // ])
 }
 
+const checkAuthentication = (req, res, next) => {
+    console.log("authenticating...")
+    next()
+}
+
+app.use(express.json())
+
 app.get("/api/todos", getTodos)
 app.post("/api/todos", todos.createTodos)
+
 app.get("/api/products", fetchProducts)
 app.post("/api/products", createProduct)
 app.put("/api/products", updateProduct)
 app.delete("/api/products", deleteProduct)
 
 
+
+app.use((req, res, next) => {
+    res.status(404).send({ msg: "resource not found" })
+})
+
+app.use((err, req, res, next) => {
+  res.status(500).send({msg:"server error",err:err.message})
+})
 
 
 /* now you can access via localhost:8000/api/todos */
