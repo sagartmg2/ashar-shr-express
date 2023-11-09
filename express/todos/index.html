@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    Todos
+    <form onsubmit="addTodo(event)">
+        <input type="text" name="title" placeholder="title">
+        <input type="submit" value="craete new todo">
+    </form>
+
+    <script>
+        function addTodo(e) {
+            e.preventDefault()
+
+            console.log("make api call")
+
+            fetch("http://localhost:8000/api/todos", {
+                method: "POST",
+                data: {
+                    title: e.target.title.value
+                }
+            })
+
+        }
+    </script>
+
+</body>
+
+</html>

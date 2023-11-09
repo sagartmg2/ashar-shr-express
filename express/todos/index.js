@@ -1,39 +1,34 @@
 const express = require("express")
 const mongoose = require('mongoose');
+var cors = require('cors');
 const Todo = require("./todosModal")
 
 mongoose.connect('mongodb://127.0.0.1:27017/todos')
     .then(() => console.log('Connected!'));
 
 const app = express()
-const todos = require("./todos");
+app.use(cors())
+app.use(express.json()) // now we can access request data in req.body
+
+// const todos = require("./todos");
+const { getTodos, createTodos,updateTodos } = require("./todos");
 
 // const products = require("./products")  //{crateProdut:() =>{} , fetchP : () =>}
 const { createProduct, updateProduct, deleteProduct, fetchProducts } = require("./products")
 /* object destructuring.. */
 
 
-async function getTodos(req, res) {
-    let todos = await Todo.find()
-    res.send(todos)
 
-    // res.send([
-    //     {title:"html",status:true},
-    //     {name:"css",status:"compolted"},
-    //     {name:"js",status:"compolted"}
-    // ])
-}
 
 const checkAuthentication = (req, res, next) => {
     console.log("authenticating...")
     next()
 }
 
-app.use(express.json())
 
 app.get("/api/todos", getTodos)
-app.post("/api/todos", todos.createTodos)
-
+app.post("/api/todos", createTodos)
+app.put("/api/todos/:id", updateTodos)
 app.get("/api/products", fetchProducts)
 app.post("/api/products", createProduct)
 app.put("/api/products", updateProduct)
@@ -46,7 +41,12 @@ app.use((req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
-  res.status(500).send({msg:"server error",err:err.message})
+    console.log(err.name)
+    let statusCode = 500
+    if (err.name === "ValidationError") {
+        statusCode = 400
+    }
+    res.status(statusCode).send({ msg: "server error", err: err.message })
 })
 
 
