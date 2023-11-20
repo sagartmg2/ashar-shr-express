@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js"
+        integrity="sha512-b94Z6431JyXY14iSXwgzeZurHHRNkLt9d6bAHt7BZT38eqV+GyngIi/tVye4jBKPYQ2lBdRs0glww4fmpuLRwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <h1>create product</h1>
+    <hr>
+    <button onclick="fetchProducts()">fetch products</button>
+
+    <form onsubmit="createProduct(event)">
+        <input type="text" name="title" id="" placeholder="title">
+        <input type="text" name="price" id="" placeholder="price">
+        <button type="submit">create</button>
+    </form>
+
+    <script>
+        function fetchProducts() {
+            axios.get("http://localhost:8000/api/products")
+        }
+
+        function createProduct(event) {
+            event.preventDefault()
+            /* make api call */
+            let newProductData = {
+                title: event.target.title.value,
+                price:event.target.price.value
+            }
+
+            axios.post("http://localhost:8000/api/products", newProductData)
+
+        }
+
+    </script>
+</body>
+
+</html>
