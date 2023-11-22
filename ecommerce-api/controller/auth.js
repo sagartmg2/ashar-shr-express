@@ -10,7 +10,8 @@ const signup = async (req, res) => {
         })
         res.send(user)
     } catch (err) {
-        res.status(500).send({
+        console.log(err.name)
+        res.status(400).send({
             error: err.message
         })
     }
