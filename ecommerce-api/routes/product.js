@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const {checkAuthentication} = require("../middleware/auth")
+const { checkAuthentication } = require("../middleware/auth")
 /* const product = {
     "getProducts": () =>{},
     "postProducts": () =>{ },
@@ -13,7 +13,7 @@ const { fetch, store } = require("../controller/product")
 router.get('/api/products', fetch)
 
 router.post('/api/products', checkAuthentication, (req, res) => {
-    console.log("product created.");
+    console.log("product created.", req.user.name);
     res.send("product created.")
 })
 

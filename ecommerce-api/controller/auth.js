@@ -1,5 +1,6 @@
 const UserModel = require("../model/User")
 const bcrypt = require("bcrypt")
+var jwt = require('jsonwebtoken');
 
 const signup = async (req, res) => {
     console.log("req.body", req.body)
@@ -30,13 +31,22 @@ async function login(req, res) {
         /* compare the hashed password */
 
         let user = await UserModel.findOne({ email: req.body.email })
-        console.log(user);// {...user_details} if found , null if email not found
+
+        // console.log(user);// {...user_details} if found , null if email not found
 
         if (user) {
+            user = user.toObject()
             let hasedPassword = user.password  // password stored in database
+
+            delete user.password;
             let matched = await bcrypt.compare(req.body.password, hasedPassword);
+            const SECRET_KEY = 'shhhhh'
+            var token = jwt.sign(user, SECRET_KEY);
             if (matched) {
-                return res.send("logged in")
+                return res.send({
+                    user: user,
+                    "token": token
+                })
             }
         }
 

@@ -11,6 +11,8 @@ const app = express()
 
 app.use(express.json()) // runs for each and every request and we get value in req.body
 app.use(cors()) // global middleware
+
+
 app.use(authRoutes)
 app.use(productRoutes)
 
@@ -19,6 +21,11 @@ app.get("/api/test", (req, res) => {
 })
 
 /* error handling middleware 404 500 */
+
+app.use((err, req, res, next) => {
+    res.send("findal server error")
+})
+
 app.listen(8000, () => {
     console.log("server started..")
 })
