@@ -12,10 +12,7 @@ const { fetch, store } = require("../controller/product")
 
 router.get('/api/products', fetch)
 
-router.post('/api/products', checkAuthentication, (req, res) => {
-    console.log("product created.", req.user.name);
-    res.send("product created.")
-})
+router.post('/api/products', checkAuthentication, store);
 
 router.post('/api/orders', checkAuthentication, (req, res) => {
     res.send("orders created.")

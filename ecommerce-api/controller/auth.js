@@ -2,7 +2,7 @@ const UserModel = require("../model/User")
 const bcrypt = require("bcrypt")
 var jwt = require('jsonwebtoken');
 
-const signup = async (req, res) => {
+const signup = async (req, res, next) => {
     console.log("req.body", req.body)
     try {
 
@@ -17,10 +17,7 @@ const signup = async (req, res) => {
         res.send(user)
 
     } catch (err) {
-        console.log(err.name)
-        res.status(400).send({
-            error: err.message
-        })
+        next(err)
     }
 }
 

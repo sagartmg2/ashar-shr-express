@@ -1,29 +1,32 @@
-const ProductModal = require("../model/Product")
+const ProductModel = require("../model/Product")
 
-let getProducts = (req, res) => {
-    res.send("list of products")
-}
-
-let postProducts = async (req, res) => {
-    /* insert in DB */
+let getProducts = async (req, res) => {
     try {
-        await ProductModal.create({
-            title: req.body.title,
-            price: req.body.price,
-        })
-        console.log("req.body", req.body)
-        res.send(`${req.body.title} created.`)
+        let products = await ProductModel.find()
+        res.send(products)
     }
     catch (err) {
+        next(err)
+    }
+}
 
-        if (err.name == "ValidationError") {
-            return res.status(400).send({
-                error: err.message
-            })
-        }
-        res.status(400).send({
-            error: err.message
-        })
+let postProducts = async (req, res, next) => {
+    try {
+        let product = await ProductModel.create({...req.body,createdBy: req.user._id})
+
+        /* ... spread operator */
+
+        // {
+        //     title: req.body.title,
+        //     price: req.body.price,
+        //     description: req.body.description,
+        //     createdBy: req.user._id,
+        // }
+
+        res.send(product)
+    }
+    catch (err) {
+        next(err)
     }
 }
 
