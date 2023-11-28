@@ -7,7 +7,7 @@ function checkAuthentication(req, res, next) {
         if (token) {
             try {
                 var decoded = jwt.verify(token, 'shhhhh');
-                req.user = decoded;
+                req.user = decoded; //{ _id: ,name,email}
                 loggedIn = true
             }
             catch (err) {

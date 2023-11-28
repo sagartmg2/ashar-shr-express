@@ -21,6 +21,9 @@ const ProductSchema = new Schema({
         required: true,
         type: ObjectId,
         ref: "User"
+    },
+    image: {
+        type: String  // we save image in some directory and only save images path
     }
 });
 
