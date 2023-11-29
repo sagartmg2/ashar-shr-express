@@ -25,6 +25,8 @@ const ProductSchema = new Schema({
     image: {
         type: String  // we save image in some directory and only save images path
     }
+}, {
+    timestamps: true
 });
 
 const ProductModel = mongoose.model("Product", ProductSchema)

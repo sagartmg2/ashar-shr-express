@@ -27,8 +27,9 @@ async function login(req, res) {
         /* check if email exists in database or not */
         /* compare the hashed password */
 
-        let user = await UserModel.findOne({ email: req.body.email })
+        let user = await UserModel.findOne({ email: req.body.email }).select("+password")
 
+        
         // console.log(user);// {...user_details} if found , null if email not found
 
         if (user) {

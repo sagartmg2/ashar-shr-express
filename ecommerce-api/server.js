@@ -14,6 +14,7 @@ const app = express()
 app.use(express.json()) // runs for each and every request and we get value in req.body
 app.use(fileUpload()); // sets up req.body value when using form-data
 app.use(cors()) // global middleware
+app.use('/uploads', express.static('uploads'))
 
 app.use(authRoutes)
 app.use(productRoutes)
